@@ -18,11 +18,10 @@ namespace zhouCheng001
         }
 
         int plan = 0; //表示采用哪个方案，1=方案1,2=方案2；1.每次更换一个，2.每次全部更换
-
+        Random rand = new Random();
         int makeNewTime() //生成新时间
         {
             int newTime=0;
-            Random rand = new Random();
             int suijishu = rand.Next(0,100);
 
             if (suijishu >0&&suijishu<=10) { newTime = 1000; }
@@ -41,7 +40,6 @@ namespace zhouCheng001
         int ArriveTime() //维修人员到达时间延迟
         {
             int arrive = 0;
-            Random rand = new Random();
             int randnumber  = rand.Next(0, 10);
             if (randnumber > 0 && randnumber <= 6) { arrive = 5; }
             if (randnumber > 6 && randnumber <= 9) { arrive = 10; }
@@ -90,15 +88,15 @@ namespace zhouCheng001
                 timeA -= 1;
                 timeB -= 1;
                 timeC -= 1;
-                if (timeA == 0 || timeB == 0 || timeC == 0)
+                if (timeA <= 0 || timeB <= 0 || timeC <= 0)
                 {
                     sumCost+= RepariCost();
                     i += RepariTime();
                     if (plan == 1)
                     {
-                        if (timeA == 0) { timeA = makeNewTime(); }
-                        if (timeB == 0) { timeB = makeNewTime(); }
-                        if (timeC == 0) { timeC = makeNewTime(); }
+                        if (timeA <= 0) { timeA = makeNewTime(); }
+                        if (timeB <= 0) { timeB = makeNewTime(); }
+                        if (timeC <= 0) { timeC = makeNewTime(); }
                     }
                     if (plan == 2)
                     {
@@ -115,11 +113,15 @@ namespace zhouCheng001
         {
             int sum = 0;
             int xianshi = 0;
-            Pen p1 = new Pen(Color.Blue, 1);
-            Pen p2 = new Pen(Color.Pink,1);
+            Pen p1 = new Pen(Color.Blue, 2);
+            Pen p2 = new Pen(Color.Red,2);
             Graphics g = this.CreateGraphics();
+            g.DrawLine(p1, 0, 300, 1000, 300);
+            g.DrawLine(p1, 0, 1, 1000, 0);
+            g.DrawLine(p1, 0, 1, 0, 300);
+            g.DrawLine(p1, 1000, 0, 1000, 300);
             int yOld = sumCost();
-            for (int i = 1; i < 500; i++)
+            for (int i = 1; i < 1000; i++)
             {
                 sum += sumCost();
                 int y = 60000 - sumCost();
@@ -133,8 +135,8 @@ namespace zhouCheng001
                 }
                 yOld = y;
             }
-            g.DrawLine(p1, 0, 300, 500, 300);
-            xianshi = sum / 500;
+            
+            xianshi = sum / 1000;
             return xianshi;
         }
 
@@ -161,6 +163,11 @@ namespace zhouCheng001
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+          
         }
     }
 }
