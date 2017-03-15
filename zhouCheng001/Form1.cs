@@ -130,36 +130,49 @@ namespace zhouCheng001
 
         private void button1_Click(object sender, EventArgs e)
         {
-            label1.Text = Plan1().ToString();
+            //label1.Text = Plan1().ToString();
 
+            int sum1 = 0;
+            int xianshi1 = 0;
             Pen p1 = new Pen(Color.Blue, 1);
             Graphics g = this.CreateGraphics();
             int yOld = Plan1();
             for (int i = 1; i < 500; i++)
             {
+                sum1 += Plan1();
+
                 int y = 60000-Plan1();
                 g.DrawLine(p1, i, y / 200, i-1, yOld/ 200);
                 yOld = y;
             }
             g.DrawLine(p1, 0, 300, 500, 300);
 
+            xianshi1 = sum1 / 500;
+            label1.Text = xianshi1.ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
-            label2.Text = Plan2().ToString();
+
+            // label2.Text = Plan2().ToString();
+
+            int sum2 = 0;
+            int xianshi2 = 0;
 
             Pen p1 = new Pen(Color.Red, 1);
             Graphics g = this.CreateGraphics();
             int yOld = Plan2();
             for (int i = 1; i < 500; i++)
             {
+                sum2 += Plan2();
                 int y = 60000 - Plan2();
                 g.DrawLine(p1, i, y / 200, i - 1, yOld / 200);
                 yOld = y;
             }
-           
+
+            xianshi2 = sum2 / 500;
+            label2.Text = xianshi2.ToString();
+
         }
 
 
