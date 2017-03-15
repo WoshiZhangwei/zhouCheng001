@@ -79,10 +79,9 @@ namespace zhouCheng001
         }
 
 
-       int  Plan1()
+        int sumCost()  //计算总费用
         {
-            plan = 1;
-            int sumCost1 = 0; //方案一总成本
+            int sumCost = 0;
             int timeA = 1400 * 60;
             int timeB = 1500 * 60;
             int timeC = 1100 * 60;
@@ -93,86 +92,64 @@ namespace zhouCheng001
                 timeC -= 1;
                 if (timeA == 0 || timeB == 0 || timeC == 0)
                 {
-                    sumCost1 += RepariCost();
+                    sumCost+= RepariCost();
                     i += RepariTime();
-                    if (timeA == 0) { timeA = makeNewTime(); }
-                    if (timeB == 0) { timeB = makeNewTime(); }
-                    if (timeC == 0) { timeC = makeNewTime(); }
+                    if (plan == 1)
+                    {
+                        if (timeA == 0) { timeA = makeNewTime(); }
+                        if (timeB == 0) { timeB = makeNewTime(); }
+                        if (timeC == 0) { timeC = makeNewTime(); }
+                    }
+                    if (plan == 2)
+                    {
+                        timeA = makeNewTime();
+                        timeB = makeNewTime();
+                        timeC = makeNewTime();
+                    }                  
                 }
             }
-            return sumCost1;
+            return sumCost;
         }
 
-        int Plan2()
+        int click()   //click时间发生
         {
-            plan = 2;
-            int sumCost2 = 0;//方案二总成本
-            int timeA = 1400 * 60;
-            int timeB = 1500 * 60;
-            int timeC = 1100 * 60;
-            for (int i = 0; i < 1200000; i++)
-            {
-                timeA -= 1;
-                timeB -= 1;
-                timeC -= 1;
-                if (timeA == 0 || timeB == 0 || timeC == 0)
-                {
-                    sumCost2 += RepariCost();
-                    i += RepariTime();
-                    timeA = makeNewTime();
-                    timeB = makeNewTime();
-                    timeC = makeNewTime();
-                }
-            }
-            return sumCost2;
-        }
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //label1.Text = Plan1().ToString();
-
-            int sum1 = 0;
-            int xianshi1 = 0;
+            int sum = 0;
+            int xianshi = 0;
             Pen p1 = new Pen(Color.Blue, 1);
+            Pen p2 = new Pen(Color.Pink,1);
             Graphics g = this.CreateGraphics();
-            int yOld = Plan1();
+            int yOld = sumCost();
             for (int i = 1; i < 500; i++)
             {
-                sum1 += Plan1();
-
-                int y = 60000-Plan1();
-                g.DrawLine(p1, i, y / 200, i-1, yOld/ 200);
+                sum += sumCost();
+                int y = 60000 - sumCost();
+                if (plan == 1)
+                {
+                    g.DrawLine(p1, i, y / 200, i - 1, yOld / 200);
+                }
+                if (plan == 2)
+                {
+                    g.DrawLine(p2, i, y / 200, i - 1, yOld / 200);
+                }
                 yOld = y;
             }
             g.DrawLine(p1, 0, 300, 500, 300);
+            xianshi = sum / 500;
+            return xianshi;
+        }
 
-            xianshi1 = sum1 / 500;
-            label1.Text = xianshi1.ToString();
+        private void button1_Click(object sender, EventArgs e)
+        {
+            plan = 1;
+            click();
+            label1.Text = sumCost().ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
-            // label2.Text = Plan2().ToString();
-
-            int sum2 = 0;
-            int xianshi2 = 0;
-
-            Pen p1 = new Pen(Color.Red, 1);
-            Graphics g = this.CreateGraphics();
-            int yOld = Plan2();
-            for (int i = 1; i < 500; i++)
-            {
-                sum2 += Plan2();
-                int y = 60000 - Plan2();
-                g.DrawLine(p1, i, y / 200, i - 1, yOld / 200);
-                yOld = y;
-            }
-
-            xianshi2 = sum2 / 500;
-            label2.Text = xianshi2.ToString();
-
+            plan = 2;
+            click();
+            label2.Text = sumCost().ToString();
         }
 
 
