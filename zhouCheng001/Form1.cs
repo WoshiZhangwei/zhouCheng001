@@ -83,11 +83,11 @@ namespace zhouCheng001
             int timeA = 1400 * 60;
             int timeB = 1500 * 60;
             int timeC = 1100 * 60;
-            for (int i = 0; i < 1200000; i++)
+            for (int i = 0; i < 1200000; i+=6000)
             {
-                timeA -= 1;
-                timeB -= 1;
-                timeC -= 1;
+                timeA -= 6000;
+                timeB -= 6000;
+                timeC -= 6000;
                 if (timeA <= 0 || timeB <= 0 || timeC <= 0)
                 {
                     sumCost+= RepariCost();
@@ -116,15 +116,15 @@ namespace zhouCheng001
             Pen p1 = new Pen(Color.Blue, 2);
             Pen p2 = new Pen(Color.Red,2);
             Graphics g = this.CreateGraphics();
-            g.DrawLine(p1, 0, 300, 1000, 300);
+            g.DrawLine(p1, 0, 250, 1000, 250);
             g.DrawLine(p1, 0, 1, 1000, 0);
-            g.DrawLine(p1, 0, 1, 0, 300);
-            g.DrawLine(p1, 1000, 0, 1000, 300);
+            g.DrawLine(p1, 0, 1, 0, 250);
+            g.DrawLine(p1, 1000, 0, 1000, 250);
             int yOld = sumCost();
             for (int i = 1; i < 1000; i++)
             {
                 sum += sumCost();
-                int y = 60000 - sumCost();
+                int y = 50000 - sumCost();
                 if (plan == 1)
                 {
                     g.DrawLine(p1, i, y / 200, i - 1, yOld / 200);
